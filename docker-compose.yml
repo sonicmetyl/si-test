@@ -15,7 +15,8 @@ services:
       - mysqlserver
     depends_on:
       - mysqlserver
-    #command: ["./wait-for-it.sh", "mysqlserver:3306", "--", "go", "run", "main.go"]
+    tty: true
+    command: ["go", "run", "main.go"]  
 
   mysqlserver:
     image: mysql:5.7

@@ -7,6 +7,6 @@ RUN chmod +x /usr/bin/dep
 COPY ./app /go/src/go-sql/app
 WORKDIR /go/src/go-sql/app
 
-COPY ./app/Gopkg.toml ./app/Gopkg.lock ./wait-for-it.sh /go/src/go-sql/app/
+COPY ./app/Gopkg.toml ./app/Gopkg.lock /go/src/go-sql/app/
 
 RUN dep ensure --vendor-only
