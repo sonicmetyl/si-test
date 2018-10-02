@@ -1,0 +1,64 @@
+<html>
+<head>
+    <style>
+        #billings {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #billings td, #billings th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #billings tr:nth-child(even){background-color: #f2f2f2;}
+
+        #billings tr:hover {background-color: #ddd;}
+
+        #billings th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+
+    <body>
+        <h3>List of Billings</h3>
+        <a href="{{ .createEndPoint }}">Tambah Baru</a>
+        <table id="billings">
+            <tr>
+                <th>Name</th>
+                <th>Code</th>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Tax Amount</th>
+                <th>Total Amount</th>
+            </tr>
+            {{ if .billings}} {{range .billings}}
+            <tr>
+                <td>{{ .TaxName }}</td>
+                <td>{{ .TaxCode }}</td>
+                <td>{{ .TaxType }}</td>
+                <td>{{ .Amount }}</td>
+                <td>{{ .TaxAmount }}</td>
+                <td>{{ .TotalAmount }}</td>
+            </tr>
+            {{end}}{{else}}
+                <tr><td colspan="2">No Data</td></tr>
+            {{end}}
+        </table>
+        <h4>Total Amount: {{ .totalAmount }}</h4>
+        <h4>Total Tax Amount: {{ .finalTaxAmount }}</h4>
+        <h4>Grand Total: {{ .finalTotalAmount }}</h4>
+        <h3>Calculating Tax Amount</h3>
+        <ul>
+            <li>food: 10% of value</li>
+            <li>tobacco: 10 + (2% of value )</li>
+            <li>entertainment: if value less than 100 then give 0, else give 1 % * (value - 100)</li>
+        </ul>
+    </body>
+</html>

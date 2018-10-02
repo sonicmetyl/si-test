@@ -1,0 +1,29 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+     - "8000:8000"
+    volumes:
+     - ./app:/go/src/go-sql/app
+    environment:
+      BASE_URL: "http://localhost:8000"
+      DB.READ: "root:default_password@(mysqlserver:3306)/si_test?charset=utf8&parseTime=True&loc=Local"
+      DB.WRITE: "root:default_password@(mysqlserver:3306)/si_test?charset=utf8&parseTime=True&loc=Local"
+      DEBUG: "true"
+    links:
+      - mysqlserver
+    depends_on:
+      - mysqlserver
+    #command: ["./wait-for-it.sh", "mysqlserver:3306", "--", "go", "run", "main.go"]
+
+  mysqlserver:
+    image: mysql:5.7
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    ports:
+      - 6033:3306
+    volumes:
+     - ./db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "default_password"
+      MYSQL_DATABASE: "si_test"
